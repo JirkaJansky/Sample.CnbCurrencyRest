@@ -1,9 +1,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Sample.CnbCurrencyRest.Domain.Helpers;
+using Sample.CnbCurrencyRest.Domain.Common.Helpers;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sample.CnbCurrencyRest.Domain.Extensions;
+namespace Sample.CnbCurrencyRest.Domain.Common.Extensions;
 
 public static class OptionsExtension
 {

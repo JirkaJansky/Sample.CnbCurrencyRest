@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Sample.CnbCurrencyRest.Domain\Sample.CnbCurrencyRest.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MappingProfiles\" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Sample.CnbCurrencyRest.Domain.Helpers;
+namespace Sample.CnbCurrencyRest.Domain.Common.Helpers;
 
 public static class ConfigurationValidator
 {

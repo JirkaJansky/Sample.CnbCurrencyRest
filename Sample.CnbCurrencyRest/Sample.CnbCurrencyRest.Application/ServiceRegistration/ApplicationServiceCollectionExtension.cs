@@ -15,12 +15,11 @@ public static class ApplicationServiceCollectionExtension
         services
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
             .AddServices()
-            .AddMediatRWithBehaviors()
-            .AddApplicationMapperProfiles();
+            .AddApplicationMapperProfiles()
+            .AddMediatRWithBehaviors();
 
         return services;
     }
-
     private static IServiceCollection AddApplicationMapperProfiles(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());

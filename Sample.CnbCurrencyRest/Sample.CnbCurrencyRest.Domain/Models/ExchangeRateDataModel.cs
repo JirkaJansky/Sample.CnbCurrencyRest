@@ -1,6 +1,6 @@
 ﻿namespace Sample.CnbCurrencyRest.Domain.Models;
 
-public class ExchangeRateData
+public class ExchangeRateDataModel
 {
     /// <summary>
     /// The country associated with the currency.
@@ -10,7 +10,7 @@ public class ExchangeRateData
     /// <summary>
     /// The name of the currency.
     /// </summary>
-    public string Currency { get; set; }
+    public string CurrencyName { get; set; }
 
     /// <summary>
     /// The amount or quantity for this currency.

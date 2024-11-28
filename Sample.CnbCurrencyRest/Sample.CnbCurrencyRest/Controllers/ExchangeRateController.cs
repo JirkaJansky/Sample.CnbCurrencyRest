@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Sample.CnbCurrencyRest.API.Dtos;
+using Sample.CnbCurrencyRest.API.Dtos.Errors;
 using Sample.CnbCurrencyRest.API.Dtos.QueryParams;
 using Sample.CnbCurrencyRest.Application.Features.Currency.Queries;
 
@@ -20,15 +21,16 @@ public class ExchangeRateController : Controller
         _mapper = mapper;
     }
 
-    /// <summary>List paginated filtered Devices</summary>
-    /// <remarks>List paginated Devices based on given filter</remarks>
-    [HttpGet(Name = nameof(ListExchangeRateCurrencies))]
-    [ProducesResponseType(typeof(ICollection<ExchangeRateDataDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ListExchangeRateCurrencies([FromQuery] ListFilteredExchangeRateDto queryParams, CancellationToken cancellationToken)
+    /// <summary>List paginated filtered Exchanges</summary>
+    /// <remarks>List paginated Exchanges based on given filter</remarks>
+    [HttpPost(nameof(ListExchangeRateCurrencies) ,Name = nameof(ListExchangeRateCurrencies))]
+    [ProducesResponseType(typeof(PaginatedListDto<ExchangeRateDataDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> ListExchangeRateCurrencies([FromBody] ListFilteredExchangeRateDto queryParams, CancellationToken cancellationToken)
     {
         var listCurrency = await _mediator
-            .Send(new ListFilteredExchangeRateQuery { CurrencyTableDate = queryParams.CurrencyTableDate }, cancellationToken);
+            .Send(_mapper.Map<ListFilteredExchangeRateQuery>(queryParams), cancellationToken);
 
-        return Ok(_mapper.Map<ICollection<ExchangeRateDataDto>>(listCurrency));
+        return Ok(_mapper.Map<PaginatedListDto<ExchangeRateDataDto>>(listCurrency));
     }
 }

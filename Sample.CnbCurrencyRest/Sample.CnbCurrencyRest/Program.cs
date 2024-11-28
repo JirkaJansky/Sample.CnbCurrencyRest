@@ -1,6 +1,6 @@
 using Sample.CnbCurrencyRest.API.ServiceRegistration;
 using Sample.CnbCurrencyRest.Application.ServiceRegistration;
-using Sample.CnbCurrencyRest.Domain.Helpers;
+using Sample.CnbCurrencyRest.Domain.Common.Helpers;
 using Sample.CnbCurrencyRest.Infrastructure.ServiceRegistration;
 
 var builder = WebApplication.CreateBuilder(args);
