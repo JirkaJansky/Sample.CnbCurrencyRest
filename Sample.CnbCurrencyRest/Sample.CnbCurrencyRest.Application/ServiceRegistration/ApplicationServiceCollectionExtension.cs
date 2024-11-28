@@ -1,18 +1,16 @@
-using System.Reflection;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NodaTime;
-using Sample.CnbCurrencyRest.API.Options;
-using Sample.CnbCurrencyRest.Aplication.Config;
-using Sample.CnbCurrencyRest.Domain.Extensions;
+using Sample.CnbCurrencyRest.Application.Config;
+using System.Reflection;
 
-namespace Sample.CnbCurrencyRest.Aplication.Extensions;
+namespace Sample.CnbCurrencyRest.Application.ServiceRegistration;
 
 public static class ApplicationServiceCollectionExtension
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration, bool isDevelopment)
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
@@ -28,18 +26,6 @@ public static class ApplicationServiceCollectionExtension
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     }
-
-    private static IServiceCollection AddCnbOptions(this IServiceCollection services, IConfiguration configuration)
-    {
-        var section = configuration.GetSection(CnbApiOptions.ConfigurationSection);
-
-        services.AddOptions<CnbApiOptions>()
-            .Bind(section)
-            .ValidateData(section);
-
-        return services;
-    }
-
 
     private static IServiceCollection AddServices(this IServiceCollection services)
     {

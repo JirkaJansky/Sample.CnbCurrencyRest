@@ -1,7 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Sample.CnbCurrencyRest.Domain.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sample.CnbCurrencyRest.Domain.Extensions;
 

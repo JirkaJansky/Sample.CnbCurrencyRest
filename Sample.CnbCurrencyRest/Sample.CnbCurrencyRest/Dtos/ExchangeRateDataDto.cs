@@ -1,5 +1,5 @@
 ﻿namespace Sample.CnbCurrencyRest.API.Dtos;
 
-public class CurrencyDto
+public class ExchangeRateDataDto
 {
 }

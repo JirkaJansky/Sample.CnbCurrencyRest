@@ -1,13 +1,16 @@
+using Sample.CnbCurrencyRest.API.ServiceRegistration;
+using Sample.CnbCurrencyRest.Application.ServiceRegistration;
 using Sample.CnbCurrencyRest.Domain.Helpers;
+using Sample.CnbCurrencyRest.Infrastructure.ServiceRegistration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddApi()
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 ConfigurationValidator.EnsureIsValid();

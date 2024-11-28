@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace Sample.CnbCurrencyRest.Aplication.Config;
+namespace Sample.CnbCurrencyRest.Application.Config;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {

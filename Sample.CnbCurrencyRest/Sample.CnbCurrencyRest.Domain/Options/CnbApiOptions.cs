@@ -8,7 +8,7 @@ public class CnbApiOptions
 
     [Required]
     [Url]
-    public string Uri { get; set; } = null!;
+    public string CnbDayCurrencyUri { get; set; } = null!;
 
     [Required]
     [Range(1, int.MaxValue)]
@@ -18,7 +18,6 @@ public class CnbApiOptions
     [Range(1, int.MaxValue)]
     public int CSVDataLine { get; set; }
 
-    [Required] 
-    public string Delimetr { get; set; } = null!;
-
+    [Required]
+    public string CSVDelimetr { get; set; } = null!;
 }
