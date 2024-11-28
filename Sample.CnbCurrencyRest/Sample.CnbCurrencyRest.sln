@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.CnbCurrencyRest.API", "Sample.CnbCurrencyRest\Sample.CnbCurrencyRest.API.csproj", "{895C7AAE-9538-42AD-9FB1-AE91039E198A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.CnbCurrencyRest.Domain", "Sample.CnbCurrencyRest.Domain\Sample.CnbCurrencyRest.Domain.csproj", "{54E0054F-E349-411C-8076-35954485FC44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.CnbCurrencyRest.Infrastructure", "Sample.CnbCurrencyRest.Infrastructure\Sample.CnbCurrencyRest.Infrastructure.csproj", "{140D796B-64E9-4FAC-A5C7-7425AFEFF1E6}"
@@ -16,16 +14,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.CnbCurrencyRest.API", "Sample.CnbCurrencyRest.API\Sample.CnbCurrencyRest.API.csproj", "{7E6448DC-0A55-403E-9EFB-B5323B83AF7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{895C7AAE-9538-42AD-9FB1-AE91039E198A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{895C7AAE-9538-42AD-9FB1-AE91039E198A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{895C7AAE-9538-42AD-9FB1-AE91039E198A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{895C7AAE-9538-42AD-9FB1-AE91039E198A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54E0054F-E349-411C-8076-35954485FC44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54E0054F-E349-411C-8076-35954485FC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54E0054F-E349-411C-8076-35954485FC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,6 +34,10 @@ Global
 		{439D0946-108E-486F-B8E6-CC1DFC651E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{439D0946-108E-486F-B8E6-CC1DFC651E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{439D0946-108E-486F-B8E6-CC1DFC651E08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6448DC-0A55-403E-9EFB-B5323B83AF7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E6448DC-0A55-403E-9EFB-B5323B83AF7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E6448DC-0A55-403E-9EFB-B5323B83AF7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E6448DC-0A55-403E-9EFB-B5323B83AF7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
