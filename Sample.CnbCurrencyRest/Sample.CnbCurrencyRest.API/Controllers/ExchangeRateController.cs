@@ -14,11 +14,13 @@ public class ExchangeRateController : Controller
 {
     private readonly ISender _mediator;
     private readonly IMapper _mapper;
+    private readonly ILogger _logger;
 
-    public ExchangeRateController(ISender mediator, IMapper mapper)
+    public ExchangeRateController(ISender mediator, IMapper mapper, ILogger<ExchangeRateController> logger)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _logger = logger;
     }
 
     /// <summary>List paginated filtered Exchanges</summary>
@@ -29,6 +31,8 @@ public class ExchangeRateController : Controller
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> ListExchangeRateCurrencies([FromBody] ListFilteredExchangeRateDto queryParams, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Controller {ControllerName} call {method} with {@queryParams}", nameof(ExchangeRateController), nameof(ListExchangeRateCurrencies), queryParams);
+
         var listCurrency = await _mediator
             .Send(_mapper.Map<ListFilteredExchangeRateQuery>(queryParams), cancellationToken);
 

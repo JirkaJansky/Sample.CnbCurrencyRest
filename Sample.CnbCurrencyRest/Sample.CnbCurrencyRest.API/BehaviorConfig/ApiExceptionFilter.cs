@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using Sample.CnbCurrencyRest.API.Dtos.Errors;
 using Sample.CnbCurrencyRest.Domain.Common.Exceptions;
 using System;
@@ -9,6 +10,13 @@ namespace Sample.CnbCurrencyRest.API.BehaviorConfig;
 
 public class ApiExceptionFilter : IExceptionFilter, IFilterMetadata
 {
+    private readonly ILogger<ApiExceptionFilter> _logger;
+
+    public ApiExceptionFilter(ILogger<ApiExceptionFilter> logger)
+    {
+        _logger = logger;
+    }
+
     public void OnException(ExceptionContext context)
     {
         (HttpStatusCode statusCode, ErrorDto errorDto) apiErrors = this.GetApiErrors(context);
@@ -22,7 +30,9 @@ public class ApiExceptionFilter : IExceptionFilter, IFilterMetadata
 
     private (HttpStatusCode statusCode, ErrorDto) GetApiErrors(ExceptionContext context)
     {
-        return context.Exception switch
+        Exception exception = context.Exception;
+
+        var result = context.Exception switch
         {
             FluentValidation.ValidationException validationException =>
                 (HttpStatusCode.BadRequest,
@@ -60,5 +70,8 @@ public class ApiExceptionFilter : IExceptionFilter, IFilterMetadata
                 ),
         };
 
+        _logger.LogError(exception, result.Item2.Message, result.Item2);
+
+        return result;
     }
 }
