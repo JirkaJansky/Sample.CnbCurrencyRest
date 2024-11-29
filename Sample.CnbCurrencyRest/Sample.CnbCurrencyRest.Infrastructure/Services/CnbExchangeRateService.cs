@@ -121,6 +121,10 @@ public class CnbExchangeRateService : ICnbExchangeRateService
 
             }
         }
+        catch (CnbCurrencyRestBaseException cnbCurrencyRestBaseException)
+        {
+            throw;
+        }
         catch (Exception exception)
         {
             throw new CnbCsvReaderException("Error in csv parser", innerException: exception);
