@@ -25,6 +25,7 @@ public class ExchangeRateController : Controller
     /// <remarks>List paginated Exchanges based on given filter</remarks>
     [HttpPost(nameof(ListExchangeRateCurrencies) ,Name = nameof(ListExchangeRateCurrencies))]
     [ProducesResponseType(typeof(PaginatedListDto<ExchangeRateDataDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> ListExchangeRateCurrencies([FromBody] ListFilteredExchangeRateDto queryParams, CancellationToken cancellationToken)
     {

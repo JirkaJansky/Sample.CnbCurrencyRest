@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Sample.CnbCurrencyRest.API.Dtos.Errors;
+using Sample.CnbCurrencyRest.Domain.Common.Exceptions;
+using System;
 using System.Net;
 
 namespace Sample.CnbCurrencyRest.API.BehaviorConfig;
@@ -23,12 +25,31 @@ public class ApiExceptionFilter : IExceptionFilter, IFilterMetadata
         return context.Exception switch
         {
             FluentValidation.ValidationException validationException =>
-                (HttpStatusCode.Conflict,
+                (HttpStatusCode.BadRequest,
                     new ErrorDto
                     {
                         Message = validationException.Message, 
-                        RawExcemption = validationException.ToString()
+                        RawExcemption = validationException.ToString(),
+                        Details = validationException.Errors.Any() ?
+                            (ICollection<IDictionary<string, object?>>?)validationException
+                                .Errors
+                                .Select(failure => new Dictionary<string, object?>
+                                {
+                                    { nameof(failure.PropertyName), failure.PropertyName },
+                                    { nameof(failure.ErrorMessage), failure.ErrorMessage}
+                                })
+                                .ToArray()
+                            :
+                            null
                     }),
+            CnbCurrencyRestBaseException cnbCurrencyRestBaseException =>
+                (HttpStatusCode.Conflict,
+                new ErrorDto
+                {
+                    Message = cnbCurrencyRestBaseException.Message,
+                    RawExcemption = cnbCurrencyRestBaseException.ToString(),
+                    Details = cnbCurrencyRestBaseException.Details
+                }),
             Exception ex => 
                 (HttpStatusCode.InternalServerError,
                     new ErrorDto

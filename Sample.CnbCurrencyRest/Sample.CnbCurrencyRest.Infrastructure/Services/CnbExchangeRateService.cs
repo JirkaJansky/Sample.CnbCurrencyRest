@@ -2,6 +2,7 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.Extensions.Options;
+using Sample.CnbCurrencyRest.Domain.Common.Exceptions;
 using Sample.CnbCurrencyRest.Domain.Common.Helpers;
 using Sample.CnbCurrencyRest.Domain.Common.Interfaces.Services;
 using Sample.CnbCurrencyRest.Domain.Common.Options;
@@ -31,7 +32,7 @@ public class CnbExchangeRateService : ICnbExchangeRateService
     {
         return _mapper
             .Map<ICollection<ExchangeRateDataModel>>(
-                await GetExchangeDataForDateAsync(date,cancellationToken)
+                await GetExchangeDataForDateAsync(date, cancellationToken)
             );
     }
 
@@ -95,31 +96,38 @@ public class CnbExchangeRateService : ICnbExchangeRateService
     {
         var currencies = new List<CsvExchangeRateData>();
         var culture = new CultureInfo(_options.CSVCulture);
-
-        using (var reader = new StreamReader(await _cnbExchangeRateClient.GetCvsCurrencyDataByDateAsync(date, cancellationToken)))
-        using (var csv = new CsvReader(reader, new CsvConfiguration(culture)
-               {
-                   Delimiter = _options.CSVDelimetr,
-                   HasHeaderRecord = true,
-                   HeaderValidated = null,
-                   MissingFieldFound = null,
-               }))
+        try
         {
-            for (int i = 1; i < _options.CSVHeaderLine; i++)
-                await reader.ReadLineAsync(cancellationToken);
-
-            try
+            using (var reader =
+                   new StreamReader(
+                       await _cnbExchangeRateClient.GetCvsCurrencyDataByDateAsync(date, cancellationToken)))
+            using (var csv = new CsvReader(reader, new CsvConfiguration(culture)
+                   {
+                       Delimiter = _options.CSVDelimetr,
+                       HasHeaderRecord = true,
+                       HeaderValidated = null,
+                       MissingFieldFound = null,
+                   }))
             {
+                for (int i = 1; i < _options.CSVHeaderLine; i++)
+                    await reader.ReadLineAsync(cancellationToken);
+
+
                 await foreach (var currency in csv.GetRecordsAsync<CsvExchangeRateData>(cancellationToken))
                 {
                     currencies.Add(currency);
                 }
+
+
             }
-            catch (Exception ex)
-            {
-                //TODO Logging or Exception handling
-                Console.WriteLine($"Error reading CSV: {ex.Message}");
-            }
+        }
+        catch (Exception exception)
+        {
+            throw new CnbCsvReaderException("Error in csv parser", innerException: exception);
+        }
+        finally
+        {
+            ;
         }
 
         return currencies;

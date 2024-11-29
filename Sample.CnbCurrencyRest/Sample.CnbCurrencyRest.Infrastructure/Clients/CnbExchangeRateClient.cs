@@ -1,4 +1,5 @@
-﻿using Sample.CnbCurrencyRest.Infrastructure.Interfaces;
+﻿using Sample.CnbCurrencyRest.Domain.Common.Exceptions;
+using Sample.CnbCurrencyRest.Infrastructure.Interfaces;
 
 namespace Sample.CnbCurrencyRest.Infrastructure.Clients;
 
@@ -6,7 +7,15 @@ public class CnbExchangeRateClient(string baseUrl, HttpClient client) : ICnbExch
 {
     public Task<Stream> GetCvsCurrencyDataByDateAsync(DateTime date, CancellationToken cancellationToken)
     {
-        Uri uri = new Uri($"{baseUrl.TrimEnd('/')}?date={date.ToString("dd.MM.yyyy")}");
-        return client.GetStreamAsync(uri, cancellationToken);
+        try
+        {
+            Uri uri = new Uri($"{baseUrl.TrimEnd('/')}?date={date.ToString("dd.MM.yyyy")}");
+            return client.GetStreamAsync(uri, cancellationToken);
+        }
+        catch (Exception exception)
+        {
+            throw new CnbClientException($"Error in call {nameof(CnbExchangeRateClient)}", innerException: exception);
+        }
+
     }
 }
