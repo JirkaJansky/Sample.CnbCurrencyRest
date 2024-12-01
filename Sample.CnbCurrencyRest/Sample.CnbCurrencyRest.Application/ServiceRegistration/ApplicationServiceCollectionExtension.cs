@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NodaTime;
 using Sample.CnbCurrencyRest.Application.Config;
 using System.Reflection;
+using Sample.CnbCurrencyRest.Application.BehaviorConfigs;
 
 namespace Sample.CnbCurrencyRest.Application.ServiceRegistration;
 
@@ -35,7 +36,9 @@ public static class ApplicationServiceCollectionExtension
     private static IServiceCollection AddMediatRWithBehaviors(this IServiceCollection services)
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        
         return services;
     }
 }
